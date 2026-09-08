@@ -77,6 +77,6 @@ a phone (MTP), a network share (SMB/SFTP), or anything else your file
 manager shows through a virtual filesystem, it only becomes a real,
 usable path once **GVFS** (or an equivalent: `mtpfs`, a manual
 `mount`) has actually mounted it, typically under
-`/run/user/$UID/gvfs/...`. This is true of any terminal tool, not
-something specific to CFB.  
+`/run/user/$UID/gvfs/...`.  
+This is true of any terminal tool, not something specific to CFB.  
 If `cp` can't reach it, neither can this. Regular local files and directories work out of the box.
