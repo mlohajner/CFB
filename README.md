@@ -40,7 +40,7 @@ Same clipboard, both directions, no configuration.
 
 - **Three commands, zero ceremony.** No flags, no syntax to remember.
 - **Real interoperability.** Not a separate terminal-only clipboard
-  its compatible with GUI file managers abd ready use
+  its compatible with GUI file managers
 - **Silent on success**, like `cp`/`mv`/`cd`. Exit code `0` or `1`,
   nothing on stdout, errors on stderr.
 - **No daemon, no background process, no dependencies beyond clipboard tool.**
