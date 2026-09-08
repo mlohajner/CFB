@@ -71,13 +71,12 @@ accordingly — nothing to configure either way.
 
 ## A few things to know!
 
-`@p` performs an actual `cp`/`mv` on the filesystem — it needs a real
+`@p` performs an actual `cp`/`mv` on the filesystem. It needs a real
 path, not just something a file manager *displays*. If you're browsing
 a phone (MTP), a network share (SMB/SFTP), or anything else your file
 manager shows through a virtual filesystem, it only becomes a real,
-usable path once **GVFS** (or an equivalent — e.g. `mtpfs`, a manual
+usable path once **GVFS** (or an equivalent: `mtpfs`, a manual
 `mount`) has actually mounted it, typically under
 `/run/user/$UID/gvfs/...`. This is true of any terminal tool, not
-something specific to `file-pointer` — if `cp` can't reach it, neither
-can this. Regular local files and directories need no such thing and
-work out of the box.
+something specific to CFB.  
+If `cp` can't reach it, neither can this. Regular local files and directories work out of the box.
