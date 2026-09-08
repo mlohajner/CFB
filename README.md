@@ -8,8 +8,8 @@ Terminal <-> File Manager clipboard bridge for Linux.
 @p               # paste into current directory
 ```
 
-Copy/cut in the terminal, paste in Nemo/Nautilus/Thunar - or the other
-way around. Same clipboard, both directions, no configuration.
+Copy/cut in the terminal, paste in Nemo/Nautilus/Thunar - OR the other way around.  
+Same clipboard, both directions, no configuration.
 
 ```text
 ┌──────────┐
