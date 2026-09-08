@@ -1,4 +1,4 @@
-# CFB Clipboard File Bridge
+# CFB Clipboard Files Bridge
 
 Terminal <-> File Manager clipboard bridge for Linux.
 
