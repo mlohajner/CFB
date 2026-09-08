@@ -1,2 +1,58 @@
-# cfb
-Clipboard Files Bridge
+# CFB Clipboard File Bridge
+
+Terminal <-> File Manager clipboard bridge for Linux.
+
+```
+@c file.conf     # copy
+@x file.conf     # cut
+@p               # paste into current directory
+```
+
+Copy/cut in the terminal, paste in Nemo/Nautilus/Thunar - or the other
+way around. Same clipboard, both directions, no configuration.
+
+## Why it's nice
+
+- **Three commands, zero ceremony.** No flags, no syntax to remember.
+- **Real interoperability.** Not a separate terminal-only clipboard
+  its compatible with GUI file managers abd ready use
+- **Silent on success**, like `cp`/`mv`/`cd`. Exit code `0` or `1`,
+  nothing on stdout, errors on stderr.
+- **No daemon, no background process, no dependencies beyond clipboard tool.**
+
+## Install
+
+Requires `xclip` (X11) **or** `wl-clipboard` (Wayland) — install
+whichever matches your session:
+
+```bash
+sudo dnf install xclip         # X11
+sudo dnf install wl-clipboard  # Wayland
+```
+
+Included `install.sh` copies a couple of files and creates aliases for you.  
+Verify install procedure and provided information, when ready, execute:
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+## X11 / Wayland
+
+Both are supported automatically. The scripts detect which one you're
+running (`$WAYLAND_DISPLAY`) and use `wl-copy`/`wl-paste` or `xclip`
+accordingly — nothing to configure either way.
+
+## A few things to know!
+
+`@p` performs an actual `cp`/`mv` on the filesystem — it needs a real
+path, not just something a file manager *displays*. If you're browsing
+a phone (MTP), a network share (SMB/SFTP), or anything else your file
+manager shows through a virtual filesystem, it only becomes a real,
+usable path once **GVFS** (or an equivalent — e.g. `mtpfs`, a manual
+`mount`) has actually mounted it, typically under
+`/run/user/$UID/gvfs/...`. This is true of any terminal tool, not
+something specific to `file-pointer` — if `cp` can't reach it, neither
+can this. Regular local files and directories need no such thing and
+work out of the box.
