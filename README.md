@@ -11,6 +11,20 @@ Terminal <-> File Manager clipboard bridge for Linux.
 Copy/cut in the terminal, paste in Nemo/Nautilus/Thunar - or the other
 way around. Same clipboard, both directions, no configuration.
 
+```text
+Terminal
+   │
+   ├── @c foo.txt ──┐
+   ├── @x foo.txt   │
+   │                ▼
+   │          System clipboard
+   │                │
+   │                ▼
+   └── @p      File Manager
+                  │
+             paste/copy
+```
+
 ## Why it's nice
 
 - **Three commands, zero ceremony.** No flags, no syntax to remember.
