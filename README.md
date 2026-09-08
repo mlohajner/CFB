@@ -20,7 +20,7 @@ way around. Same clipboard, both directions, no configuration.
      ├───── @x foo.txt ────────┤
      │                         ▼
      │                ╔════════╪══════════╗
-     │      ┌─────────║  System Clipboard ║
+     │      ┌─────────╢  System Clipboard ║
      │      │         ╚═════╪════════╪════╝
      │      │               ▲        │
      │      │               │      Paste
