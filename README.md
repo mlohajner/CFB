@@ -31,9 +31,9 @@ way around. Same clipboard, both directions, no configuration.
      │      │            └──────┬───────┘
      │      │                   │
      │      │                   ▼
-     │      ▼             ┌─────┴───────┐
-     └───── @p ─────────►─┤ File system │
-                          └─────────────┘
+     │      ▼            ╔══════╪═══════╗
+     └───── @p ────────►─╢ File System  ║
+                         ╚══════════════╝
 ```
 
 ## Why it's nice
