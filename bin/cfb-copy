@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# cfb-copy file1 [file2 ...]
+# puts file(s) on the clipboard as a "copy" operation, GUI-file-manager style.
+
+set -euo pipefail
+
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+# shellcheck source=../lib/cfb-library.sh
+source "$script_dir/../lib/cfb-library.sh"
+
+cfb_mark "copy" "$@"

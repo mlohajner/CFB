@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# cfb-paste
+# reads the clipboard (set by cfb-copy, cfb-cut, or any GUI file manager copy/cut)
+# and performs the actual cp/mv into the current directory.
+
+set -uo pipefail
+
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+# shellcheck source=../lib/cfb-library.sh
+source "$script_dir/../lib/cfb-library.sh"
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+	cfb_header
+	echo "usage: cfb-paste"
+	echo "pastes whatever is on the clipboard into the current directory"
+	exit 0
+fi
+
+raw="$(cfb_clipboard_read)"
+
+if [ -z "$raw" ]; then
+	echo "cfb-paste: clipboard is empty or doesn't contain a file reference" >&2
+	exit 1
+fi
+
+mode="$(head -n 1 <<< "$raw")"
+if [ "$mode" != "copy" ] && [ "$mode" != "cut" ]; then
+	echo "cfb-paste: clipboard doesn't contain a recognized copy/cut operation" >&2
+	exit 1
+fi
+
+uris=()
+while IFS= read -r line; do
+	[ -n "$line" ] && uris+=("$line")
+done < <(tail -n +2 <<< "$raw")
+
+if [ ${#uris[@]} -eq 0 ]; then
+	echo "cfb-paste: no files found in clipboard" >&2
+	exit 1
+fi
+
+dest_dir="$(pwd)"
+ok=1
+
+for uri in "${uris[@]}"; do
+	src="$(cfb_urldecode "$uri")"
+
+	if [ ! -e "$src" ]; then
+		echo "cfb-paste: '$src': source no longer exists, skipping" >&2
+		ok=0
+		continue
+	fi
+
+	base="$(basename -- "$src")"
+	dest="$dest_dir/$base"
+
+	if [ "$(readlink -f -- "$src")" = "$(readlink -f -- "$dest" 2>/dev/null)" ]; then
+		echo "cfb-paste: '$base': source and destination are the same, skipping" >&2
+		continue
+	fi
+
+	if [ "$mode" = "copy" ]; then
+		cp -ri -- "$src" "$dest" || ok=0
+	else
+		mv -i -- "$src" "$dest" || ok=0
+	fi
+done
+
+# cut is a one-shot operation, like in a real file manager: clear the
+# clipboard after a successful paste so a second cfb-paste doesn't try
+# to move already-relocated files again.
+if [ "$mode" = "cut" ] && [ "$ok" -eq 1 ]; then
+	cfb_clipboard_clear
+fi
+
+exit "$((1 - ok))"
